@@ -11,7 +11,7 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
 
-  <title>Location View</title>
+  <title>Location Trace</title>
 
   <!-- Included CSS Files (Uncompressed) -->
   <!--
@@ -29,7 +29,6 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
-
   <script type="text/javascript">
     window.loc_stream_id = "<%= stream.stream_id %>";
   </script>
@@ -39,7 +38,7 @@
 
   <div class="row">
     <div class="twelve columns">
-      <h2>Your friend's at:</h2>
+      <h2>You are at:</h2>
 
       <hr />
     </div>
@@ -61,6 +60,6 @@
   <!-- Initialize JS Plugins -->
   <script src="/javascripts/app.js"></script>
 
-  <script src="/javascripts/viewer_client.js"></script>
+  <script src="/javascripts/trace_client.js"></script>
 </body>
 </html>

@@ -16,63 +16,68 @@ def log_info(msg)
   $logger.info(msg)
 end
 
-class Stream
+class LocationStream
   attr_reader :stream_id, :sender, :listeners, :channel
 
-  def initialize(web_socket)
+  def initialize(ws=nil)
     @stream_id = UUIDTools::UUID.random_create.to_s
     @sender = nil
     @listeners = []
 
     @channel = EM::Channel.new
   end
+
 end
 
 
 class App < Sinatra::Base
+
+  def self.streams
+    (@streams ||= {})
+  end
+
   get '/' do
     send_file File.join(settings.public_folder, 'index.html')
   end
 
   get '/view/new' do
-    id  = UUIDTools::UUID.random_create.to_s
-    #key = Secure
-
-    redirect("/view/#{id}")
+    s = LocationStream.new
+    self.class.streams[s.stream_id] = s
+    redirect("/view/#{s.stream_id}")
   end
 
   get '/view/:id' do |id|
-    erb :recv
+    erb :recv, :locals => {:stream => self.class.streams[id]}
   end
+
+  get '/send/:id' do |id|
+    erb :send, :locals => {:stream => self.class.streams[id]}
+  end
+
 end
-
-
-@streams = Set.new
 
 EM.run do
   EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |ws|
     ws.onopen do
-      @streams << Stream.new(ws)
       case ws.request['path']
-      when '/view'
-        puts "viewer"
-        @streams.each { |str| str.channel.subscribe{ |msg| ws.send(msg) } }
+      when /\/view/
+        stream = App.streams[ws.request["query"]["stream_id"]]
+        stream.channel.subscribe{ |msg| ws.send(msg) }
         ws.send("you're a viewer")
 
-      when '/send'
-        puts "sender"
+      when /\/send/
+        stream = App.streams[ws.request["query"]["stream_id"]]
 
         ws.onmessage do |msg|
-          @streams.each{|str| str.channel.push(msg)}
+          stream.channel.push(msg)
         end
         ws.send("you're a sender")
 
       else
-        puts "unknown socket"
+        log_info "unknown socket path"
       end
 
       log_info "WebSocket connection open #{ws.inspect}"
-      # ws.send({ :streamId => UUIDTools::UUID.random_create.to_s }.to_json)
     end
 
     # ws.onclose { log_info "Connection closed" }
