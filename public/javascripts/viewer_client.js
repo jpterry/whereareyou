@@ -15,7 +15,12 @@
     }
   }
 
+  this.init_modal = function(){
+    $("#linkModal").reveal();
+  }
+
   $(function(){
     self.init_socket();
+    self.init_modal();
   });
 }(jQuery));

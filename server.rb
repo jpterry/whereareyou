@@ -47,7 +47,9 @@ class App < Sinatra::Base
   end
 
   get '/view/:id' do |id|
-    erb :recv, :locals => {:stream => self.class.streams[id]}
+    trk_link = "http://#{request.host}:4000/send/#{id}"
+
+    erb :recv, :locals => {:stream => self.class.streams[id], :tracking_link => trk_link}
   end
 
   get '/send/:id' do |id|
@@ -63,7 +65,7 @@ EM.run do
       when %r{/view}
         if(stream = App.streams[ws.request["query"]["stream_id"]])
           stream.channel.subscribe{ |msg| ws.send(msg) }
-          ws.send("you're a viewer")
+          ws.send("connected")
         else
           puts "socket not found"
         end
