@@ -9,6 +9,7 @@ require 'sinatra/base'
 require 'thin'
 require 'json'
 require 'logger'
+require 'securerandom'
 
 $logger = Logger.new(File.expand_path('../log/server.log', __FILE__))
 def log_info(msg)
@@ -34,14 +35,15 @@ class App < Sinatra::Base
   end
 
   get '/view/new' do
-    id = UUIDTools::UUID.random_create.to_s
+    id  = UUIDTools::UUID.random_create.to_s
+    #key = Secure
+
     redirect("/view/#{id}")
   end
 
-  get 'view/:id' do |id|
-    "hey"
+  get '/view/:id' do |id|
+    erb :recv
   end
-
 end
 
 
