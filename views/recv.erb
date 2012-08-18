@@ -32,9 +32,12 @@
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD7riUItV1D6KxBnS4-YfdIOmOgGZM55aU&sensor=true">
     </script>
     <script type="text/javascript">
+      var lat
+      var lng
+
       function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
+          center: new google.maps.LatLng(lat, lng),
           zoom: 8,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
