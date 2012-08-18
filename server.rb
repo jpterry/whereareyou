@@ -60,18 +60,23 @@ EM.run do
   EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080) do |ws|
     ws.onopen do
       case ws.request['path']
-      when /\/view/
-        stream = App.streams[ws.request["query"]["stream_id"]]
-        stream.channel.subscribe{ |msg| ws.send(msg) }
-        ws.send("you're a viewer")
-
-      when /\/send/
-        stream = App.streams[ws.request["query"]["stream_id"]]
-
-        ws.onmessage do |msg|
-          stream.channel.push(msg)
+      when %r{/view}
+        if(stream = App.streams[ws.request["query"]["stream_id"]])
+          stream.channel.subscribe{ |msg| ws.send(msg) }
+          ws.send("you're a viewer")
+        else
+          puts "socket not found"
         end
-        ws.send("you're a sender")
+
+      when %r{/send}
+        if(stream = App.streams[ws.request["query"]["stream_id"]])
+          ws.onmessage do |msg|
+            stream.channel.push(msg)
+          end
+          ws.send("you're a sender")
+        else
+          puts "send socket not found"
+        end
 
       else
         log_info "unknown socket path"
