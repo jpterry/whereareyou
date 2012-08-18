@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -29,18 +28,29 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
-</head>
-<body>
-
-  <div class="row">
-    <div class="twelve columns">
-      <h2>Your friend's at:</h2>
-
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD7riUItV1D6KxBnS4-YfdIOmOgGZM55aU&sensor=true">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Your friend's at:</h2>
       <hr />
+      </div>
     </div>
-  </div>
-
-  <div class="row">
+     <div class="row">
     <div class="twelve columns">
       <table id="datas">
         <thead><th>Datas</th></thead>
@@ -49,7 +59,7 @@
       </table>
     </div>
   </div>
-
+    <div id="map_canvas"></div>
   <!-- Included JS Files (Compressed) -->
   <script src="/javascripts/foundation.min.js"></script>
 
