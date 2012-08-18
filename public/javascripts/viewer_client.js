@@ -3,7 +3,7 @@
   this.socket = null;
 
   this.init_socket = function(){
-    self.socket = new WebSocket("ws://192.168.0.112:8080/view");
+    self.socket = new WebSocket("ws://192.168.0.112:8080/view?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
     }
