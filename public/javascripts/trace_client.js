@@ -31,7 +31,7 @@
   }
 
   this.init_socket = function(){
-    self.socket = new WebSocket("ws://192.168.0.112:8080/send?stream_id="+window.loc_stream_id);
+    self.socket = new WebSocket("ws://localhost:8080/send?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
       begin_trace();

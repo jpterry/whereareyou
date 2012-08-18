@@ -3,7 +3,7 @@
   this.socket = null;
 
   this.init_socket = function(){
-    self.socket = new WebSocket("ws://192.168.0.112:8080/view?stream_id="+window.loc_stream_id);
+    self.socket = new WebSocket("ws://localhost:8080/view?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
     }
@@ -13,22 +13,21 @@
       console.log(msg.data);
       msg_obj = JSON.parse(msg.data);
       console.log(msg_obj);
-      self.update_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
+      self.init_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
 
-      var _tr = "<tr><td>" + msg.data + "</td></tr>";
+      var _tr = "<tr><td>" + msg_obj.data.coords.latitude + ", " + msg_obj.data.coords.latitude + "</td></tr>";
       $('table#datas tbody').append(_tr);
 
     }
   }
 
-  this.update_map = function(lat, lng){
+  this.init_map = function(lat, lng){
       var mapOptions = {
         center: new google.maps.LatLng(lat, lng),
         zoom: 8,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
   }
 
   this.init_modal = function(){
