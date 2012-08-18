@@ -65,7 +65,6 @@ EM.run do
       when %r{/view}
         if(stream = App.streams[ws.request["query"]["stream_id"]])
           stream.channel.subscribe{ |msg| ws.send(msg) }
-          ws.send("connected")
         else
           puts "socket not found"
         end

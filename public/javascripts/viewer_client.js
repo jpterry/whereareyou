@@ -10,9 +10,25 @@
 
     self.socket.onmessage = function(msg){
       console.log(msg);
+      console.log(msg.data);
+      msg_obj = JSON.parse(msg.data);
+      console.log(msg_obj);
+      self.update_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
+
       var _tr = "<tr><td>" + msg.data + "</td></tr>";
       $('table#datas tbody').append(_tr);
+
     }
+  }
+
+  this.update_map = function(lat, lng){
+      var mapOptions = {
+        center: new google.maps.LatLng(lat, lng),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
   }
 
   this.init_modal = function(){
