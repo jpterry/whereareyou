@@ -16,17 +16,15 @@
 
 
 /* -----------------------------------------
-   recv.erb
+   Page Name 1
 ----------------------------------------- */
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
+#map_canvas { height: 80%; width: 80%; margin: 0 auto; }
 
 
 /* -----------------------------------------
-   index.html
+   Page Name 2
 ----------------------------------------- */
-.where_button {
-  width: 54%;
-  margin: 0 auto;
-}
+
 
