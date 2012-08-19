@@ -3,7 +3,8 @@
   this.socket = null;
 
   this.init_socket = function(){
-    self.socket = new WebSocket("ws://localhost:8080/view?stream_id="+window.loc_stream_id);
+    var hostname = window.location.hostname;
+    self.socket = new WebSocket("ws://" + hostname + ":8080/view?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
     };
@@ -14,39 +15,36 @@
       msg_obj = JSON.parse(msg.data);
       console.log(msg_obj);
       self.init_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
-
-      var _tr = "<tr><td>" + msg_obj.data.coords.latitude + ", " + msg_obj.data.coords.latitude + "</td></tr>";
-      $('table#datas tbody').append(_tr);
-
-    };
-  };
+      $("#linkModal").trigger('reveal:close');
+    }
+  }
 
   this.init_map = function(lat, lng){
-      var mapOptions = {
-        center: new google.maps.LatLng(lat, lng),
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var mapOptions = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-      var marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: new google.maps.LatLng(lat, lng),
       map: map,
       title:"I'm Here!"
-  });
-  };
+    });
+  }
 
   this.init_modal = function(){
+    //When you click the share link, select all of it
+    $('#linkModal input').live("click", function(){
+      $(this).select();
+    });
+
     $("#linkModal").reveal();
   };
 
   $(function(){
     self.init_socket();
     self.init_modal();
-
-    //When you click the share link, select all of it
-    $('#linkModal input').live("click", function(){
-    $(this).select();
-  });
   });
 }(jQuery));
