@@ -16,7 +16,7 @@
 
     var msg_str = JSON.stringify(msg);
 
-    var _tr = '<tr><td class=><i class="foundicon-location one columns" style="font-size:40px;"></i></td>';
+    var _tr = '<tr><td style="line-height:2em" ><i class="foundicon-location one columns" style="font-size:2.7em"></i></td>';
     _tr += "<td>" + position.coords.latitude + "<br />" + position.coords.longitude + "</td></tr>";
 
 
