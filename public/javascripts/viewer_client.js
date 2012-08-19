@@ -7,7 +7,7 @@
     self.socket = new WebSocket("ws://" + hostname + ":8080/view?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
-    }
+    };
 
     self.socket.onmessage = function(msg){
       console.log(msg);
@@ -15,7 +15,6 @@
       msg_obj = JSON.parse(msg.data);
       console.log(msg_obj);
       self.init_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
-
       $("#linkModal").trigger('reveal:close');
     }
   }
@@ -42,7 +41,7 @@
     });
 
     $("#linkModal").reveal();
-  }
+  };
 
   $(function(){
     self.init_socket();
