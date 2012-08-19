@@ -15,8 +15,7 @@
       console.log(msg_obj);
       self.init_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
 
-      var _tr = "<tr><td>" + msg_obj.data.coords.latitude + ", " + msg_obj.data.coords.latitude + "</td></tr>";
-      $('table#datas tbody').append(_tr);
+      $("#linkModal").trigger('reveal:close');
 
     }
   }
