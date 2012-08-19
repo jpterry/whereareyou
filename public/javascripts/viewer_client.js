@@ -6,7 +6,7 @@
     self.socket = new WebSocket("ws://localhost:8080/view?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
-    }
+    };
 
     self.socket.onmessage = function(msg){
       console.log(msg);
@@ -18,8 +18,8 @@
       var _tr = "<tr><td>" + msg_obj.data.coords.latitude + ", " + msg_obj.data.coords.latitude + "</td></tr>";
       $('table#datas tbody').append(_tr);
 
-    }
-  }
+    };
+  };
 
   this.init_map = function(lat, lng){
       var mapOptions = {
@@ -34,11 +34,11 @@
       map: map,
       title:"I'm Here!"
   });
-  }
+  };
 
   this.init_modal = function(){
     $("#linkModal").reveal();
-  }
+  };
 
   $(function(){
     self.init_socket();
@@ -48,5 +48,5 @@
     $('#linkModal input').live("click", function(){
     $(this).select();
   });
-  });  
+  });
 }(jQuery));
