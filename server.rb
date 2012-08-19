@@ -48,11 +48,12 @@ class App < Sinatra::Base
 
   get '/view/:id' do |id|
     trk_link = "http://#{request.host}:4000/send/#{id}"
-
+    #TODO: handle stream not found
     erb :recv, :locals => {:stream => self.class.streams[id], :tracking_link => trk_link}
   end
 
   get '/send/:id' do |id|
+    #TODO: Handle stream not found
     erb :send, :locals => {:stream => self.class.streams[id]}
   end
 

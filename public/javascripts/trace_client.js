@@ -4,7 +4,7 @@
 
   this.on_geo_error = function(eh){
     console.log(eh.message);
-  }
+  };
 
   this.on_geo_success = function(position){
     console.log(position);
@@ -16,11 +16,15 @@
 
     var msg_str = JSON.stringify(msg);
 
-    var _tr = "<tr><td>" + msg_str + "</td></tr>";
+    var _tr = '<tr><td style="line-height:2em" ><i class="foundicon-location one columns" style="font-size:2.7em"></i></td>';
+    _tr += "<td>" + position.coords.latitude + "<br />" + position.coords.longitude + "</td></tr>";
+
+
+
     $('table#datas tbody').append(_tr);
 
     self.socket.send(msg_str);
-  }
+  };
 
   function begin_trace(){
     if(navigator.geolocation) {
@@ -36,12 +40,12 @@
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
       begin_trace();
-    }
+    };
 
     self.socket.onmessage = function(msg){
       console.log(msg);
-    }
-  }
+    };
+  };
 
   $(function(){
     self.init_socket();
