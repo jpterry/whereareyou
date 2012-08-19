@@ -43,5 +43,10 @@
   $(function(){
     self.init_socket();
     self.init_modal();
+
+    //When you click the share link, select all of it
+    $('#linkModal input').live("click", function(){
+    $(this).select();
   });
+  });  
 }(jQuery));
