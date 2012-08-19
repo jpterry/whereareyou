@@ -3,7 +3,8 @@
   this.socket = null;
 
   this.init_socket = function(){
-    self.socket = new WebSocket("ws://localhost:8080/view?stream_id="+window.loc_stream_id);
+    var hostname = window.location.hostname;
+    self.socket = new WebSocket("ws://" + hostname + ":8080/view?stream_id="+window.loc_stream_id);
     self.socket.onopen = function(){
       console.log("Socket has been opened!");
     }
@@ -21,23 +22,25 @@
   }
 
   this.init_map = function(lat, lng){
-      var mapOptions = {
-        center: new google.maps.LatLng(lat, lng),
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var mapOptions = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-      var marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: new google.maps.LatLng(lat, lng),
       map: map,
       title:"I'm Here!"
-  });
+    });
   }
 
   this.init_modal = function(){
     $("#linkModal").reveal();
   }
+
+
 
   $(function(){
     self.init_socket();
@@ -47,5 +50,5 @@
     $('#linkModal input').live("click", function(){
     $(this).select();
   });
-  });  
+
 }(jQuery));
