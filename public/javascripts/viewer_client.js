@@ -28,6 +28,12 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+      var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lat, lng),
+      map: map,
+      title:"I'm Here!"
+  });
   }
 
   this.init_modal = function(){
