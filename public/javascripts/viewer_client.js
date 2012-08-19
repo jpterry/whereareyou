@@ -17,7 +17,6 @@
       self.init_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
 
       $("#linkModal").trigger('reveal:close');
-
     }
   }
 
@@ -37,18 +36,16 @@
   }
 
   this.init_modal = function(){
+    //When you click the share link, select all of it
+    $('#linkModal input').live("click", function(){
+      $(this).select();
+    });
+
     $("#linkModal").reveal();
   }
-
-
 
   $(function(){
     self.init_socket();
     self.init_modal();
-
-    //When you click the share link, select all of it
-    $('#linkModal input').live("click", function(){
-    $(this).select();
   });
-
 }(jQuery));
