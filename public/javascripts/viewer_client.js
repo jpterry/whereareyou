@@ -1,6 +1,7 @@
 (function($){
   var self = this;
   this.socket = null;
+  var id = 1;
 
   this.init_socket = function(){
     var hostname = window.location.hostname;
@@ -16,23 +17,34 @@
       console.log(msg_obj);
       self.init_map(msg_obj.coords.latitude, msg_obj.coords.longitude);
       $("#linkModal").trigger('reveal:close');
-    }
-  }
+
+      self.addMarker(lat,lng, id++);
+    };
+  };
+
+  var map = null;
+  var markers = [];
 
   this.init_map = function(lat, lng){
-    var mapOptions = {
-      center: new google.maps.LatLng(lat, lng),
-      zoom: 17,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+  var mapOptions = {
+    center: new google.maps.LatLng(lat, lng),
+    zoom: 17,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+  };
 
+  this.addMarker = function(lat, lng, id) {
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(lat, lng),
-      map: map,
-      title:"I'm Here!"
+      map: map
     });
-  }
+    markers.push({ id: id, markerObject: marker});
+  };
+
+  this.updateMarkerCoordinates(lat, lng, id) {
+    marker.setPosition(new google.mapsLatLng(lat, lng));
+  };
 
   this.init_modal = function(){
     //When you click the share link, select all of it
