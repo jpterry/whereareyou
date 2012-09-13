@@ -47,7 +47,7 @@ class App < Sinatra::Base
   end
 
   get '/view/:id' do |id|
-    trk_link = "http://#{request.host}:4000/send/#{id}"
+    trk_link = "http://#{request.host}/send/#{id}"
     #TODO: handle stream not found
     erb :recv, :locals => {:stream => self.class.streams[id], :tracking_link => trk_link}
   end
@@ -94,6 +94,6 @@ EM.run do
 
   end
 
-Thin::Server.start App, '0.0.0.0', 4000
+Thin::Server.start App, '0.0.0.0', 80
 end
 
